@@ -52,6 +52,7 @@ function draw() {
 
   textAlign(LEFT);
   fill(FG_COLOR);
+  noStroke();
   text(`Quadratic form: (${qa},${qb},${qc})   D = ${qb * qb - 4 * qa * qc}`, 10, height - 50);
 }
 
@@ -215,6 +216,7 @@ function drawTree(t, distance, ratio, angle, iterations, printData, currentMatri
     if (qValue > 0) fill(POSITIVE_COLOR);
     else if (qValue < 0) fill(NEGATIVE_COLOR);
     else fill(ZERO_COLOR);
+    noStroke();
     text(`(${x},${y})\n${qValue}`, t.getx(), t.gety());
 
     t.penup();

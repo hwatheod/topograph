@@ -1,26 +1,18 @@
 <html> 
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Conway's Topograph</title>
 		<style>
-			body { margin: 24px; font: 16px/1.5 system-ui, sans-serif; color: #20242b; }
-			h2 { text-align: center; }
-			#content { display: flex; align-items: flex-start; gap: 24px; }
-			#sketch-container { flex: 0 0 500px; line-height: 0; }
-			#sketch-container canvas { max-width: 100%; height: auto !important; }
-			#info { max-width: 760px; }
-			@media (max-width: 900px) {
-				body { margin: 16px; }
-				#content { flex-direction: column; }
-				#sketch-container { flex-basis: auto; }
-			}
+			#content { position: relative; }
+			#sketch-container { width: 500px; height: 600px; }
+			#sketch-container canvas { display: block; }
+			#info { position: absolute; top: 0; left: 520px; }
 		</style>
 		<script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
 		<script src="topograph.js" defer></script>
 	</head>
 	<body>
-	  <h2>Quadratic forms and Conway's topograph</h2>
+	  <h2><center>Quadratic forms and Conway's topograph</center></h2>
 		<div id="content">
 			<div id="sketch-container" aria-label="Interactive Conway topograph">
 				<noscript>
