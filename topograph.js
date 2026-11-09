@@ -132,10 +132,11 @@ function setIdentityMatrix() {
   matrix = [[1, 0], [0, 1]];
 }
 
-function keyPressed() {
+function keyPressed(event) {
+  const pressedKey = event.key;
   loadPixels();
 
-  if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
+  if (pressedKey === LEFT_ARROW || pressedKey === RIGHT_ARROW) {
     turtle.penup();
     turtle.forward(stepDistance / 2);
 
@@ -150,7 +151,7 @@ function keyPressed() {
     undrawArrow(turtle);
     turtle.forward(stepDistance / 2);
 
-    if (keyCode === LEFT_ARROW) turtle.left(45);
+    if (pressedKey === LEFT_ARROW) turtle.left(45);
     else turtle.right(45);
 
     turtle.penup();
@@ -158,7 +159,7 @@ function keyPressed() {
     loadPixels();
     if (!pixelFound(turtle.getx(), turtle.gety())) {
       turtle.back(5);
-      if (keyCode === LEFT_ARROW) turtle.left(45);
+      if (pressedKey === LEFT_ARROW) turtle.left(45);
       else turtle.right(45);
     } else {
       turtle.back(5);
@@ -167,12 +168,12 @@ function keyPressed() {
     turtle.forward(stepDistance / 2);
     drawArrow(turtle);
 
-    if (keyCode === LEFT_ARROW) updateMatrixLeft(matrix);
+    if (pressedKey === LEFT_ARROW) updateMatrixLeft(matrix);
     else updateMatrixRight(matrix);
     return false;
   }
 
-  if (keyCode === DOWN_ARROW) {
+  if (pressedKey === DOWN_ARROW) {
     undrawArrow(turtle);
     turtle.left(180);
     drawArrow(turtle);
@@ -180,12 +181,12 @@ function keyPressed() {
     return false;
   }
 
-  if (key === ' ') {
+  if (pressedKey === ' ') {
     redraw();
     return false;
   }
 
-  if (keyCode === ENTER || keyCode === RETURN) {
+  if (pressedKey === ENTER || pressedKey === RETURN) {
     setIdentityMatrix();
     redraw();
     return false;
