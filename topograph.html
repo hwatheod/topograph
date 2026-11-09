@@ -1,0 +1,86 @@
+<html> 
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Conway's Topograph</title>
+		<style>
+			body { margin: 24px; font: 16px/1.5 system-ui, sans-serif; color: #20242b; }
+			h2 { text-align: center; }
+			#content { display: flex; align-items: flex-start; gap: 24px; }
+			#sketch-container { flex: 0 0 500px; line-height: 0; }
+			#sketch-container canvas { max-width: 100%; height: auto !important; }
+			#info { max-width: 760px; }
+			@media (max-width: 900px) {
+				body { margin: 16px; }
+				#content { flex-direction: column; }
+				#sketch-container { flex-basis: auto; }
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.min.js"></script>
+		<script src="topograph.js" defer></script>
+	</head>
+	<body>
+	  <h2>Quadratic forms and Conway's topograph</h2>
+		<div id="content">
+			<div id="sketch-container" aria-label="Interactive Conway topograph">
+				<noscript>
+					<p>JavaScript is required to view the contents of this page.</p>
+				</noscript>
+			</div>
+			<div id="info">
+			This application allows you to explore Conway's topographic method of understanding quadratic forms as described in his book <A HREF="https://www.worldcat.org/title/sensual-quadratic-form/oclc/38057750"><I>The Sensual (quadratic) Form</I></A>.<br><br>
+			
+			Conway's topograph is an infinite graph constructed as follows.  The vertices are "lax superbases".  A lax superbasis is a set of 3 lattice points {u,v,w} 
+			in Z<sup>2</sup>, each determined up to sign, such that any 2 of them are linearly independent, and &plusmn;u &plusmn;v &plusmn;w = 0 for some choice of signs.  Two lax superbases are joined
+			by an edge if they have 2 points in common.<br><br>
+			
+			Given any 2 linearly independent points u and v in Z<sup>2</sup> there are exactly 2 ways to extend it to a lax superbasis.  Thus each edge of the topograph
+			corresponds to a "lax basis" of Z<sup>2</sup> (lax = unordered and elements determined up to sign, as before).  Also, given any lax superbasis {u,v,w} there
+			are exactly 3 adjacent lax superbases, corresponding to edges {u,v}, {u,w}, and {v,w}.  Thus every vertex of the topograph has degree 3.  Conway proves that the topograph is a tree, i.e., it is connected and has no cycles.			
+			The "faces" of the topograph correspond to nonzero "lax points" in Z<sup>2</sup>. <br><br>
+			
+			The topograph itself is independent of any quadratic form, but given a quadratic form <I>ax<sup>2</sup> + bxy + cy<sup>2</I>, we may additionally label each face with the value of the form 
+			evaluated at the (lax) point corresponding to the face.  This is done in the picture at the left, which shows a portion of the topograph labelled for the quadratic form
+			(a,b,c) = (1,1,1).  The lax point labels are normalized so that the y coordinate is positive if possible, or if y=0, then the x coordinate is positive.<br><br>
+			
+			Conway demonstrates that the classification of the quadratic form is reflected in various features of the topograph.<br>
+			For positive definite forms (<I>b<sup>2</sup> - 4ac &lt; 0</i>), there is a vertex which is a <I>well</I> (usually unique) surrounded by the 3 minimal positive values of the form.<br>
+			For indefinite forms not representing 0 (<I>b<sup>2</sup>-4ac &gt; 0 </I> but not a square), there is an infinite-length <I>river</I> separating positive values from negative values, and the values around the river repeat periodically.<br>
+			For indefinite forms representing 0 (<I>b<sup>2</sup>-4ac &gt; 0 </I> and a square), the river is finite and empties into 2 <I>lakes</I> (faces of value 0) in both directions.<br>
+			For degenerate forms (<I>b<sup>2</sup> - 4ac = 0</I>), there is a unique lake surrounded by values of one sign. (Except if a=b=c=0 where all faces are lakes.)<br><br>
+			
+			Using the application:<br>
+			The arrow (initially centered) indicates your current position and direction in the topograph.  You are always at the midpoint of an edge.<br>
+			Pressing the <b>left/right arrow</b> key will move your forward in your current direction, followed by a left/right turn, to the midpoint of the next edge.<br>
+			The <b>down arrow</b> key turns you around.<br>
+			The <b>space bar</b> re-centers the screen at your current position (maintaining your direction) so you can see more of the topograph.<br>
+			The <b>enter</b> key returns you home (i.e., to the position of the topograph where you started). <br>
+                        Use the form below the application to change the quadratic form.<br>
+			<b>If keys aren't working, click on any black space in the application first in order to bring keyboard focus to the application.</b><br><br>
+
+			Built with <a href="https://p5js.org/" title="p5.js">p5.js</a><br>
+		Uses code from <a href="https://www.openprocessing.org/sketch/26896">"Logo (turtle graphics) class & example"</a> by Dj Faustus, licensed under Creative Commons Attribution-Share Alike 3.0 and GNU GPL license.<br>
+
+			</div>
+			<br>
+			Change the quadratic form here:
+			<form id="quadratic-form">
+				a: <input type="number" name="aa" size="3" value="1" required>
+				b: <input type="number" name="bb" size="3" value="1" required>
+				c: <input type="number" name="cc" size="3" value="1" required>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+	<script>
+		document.getElementById('quadratic-form').addEventListener('submit', (event) => {
+			event.preventDefault();
+			const values = ['aa', 'bb', 'cc'].map((name) => document.querySelector(`[name="${name}"]`).value.trim());
+			if (values.every((value) => /^-?\d+$/.test(value))) {
+				window.changeQuadraticForm(...values.map(Number));
+			} else {
+				alert('Invalid data! (a, b, and c must be integers)');
+			}
+		});
+	</script>
+	</body>
+</html>
